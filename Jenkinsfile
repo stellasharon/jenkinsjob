@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
 
   environment {
     MAJOR_VERSION = 1
@@ -7,31 +7,15 @@ pipeline {
 
   stages {
     stage('Say Hello') {
-      agent any
-
       steps {
         sayHello 'Awesome Student!'
       }
     }
-    
-    stage('Unit Tests') {
-      agent {
-        label 'master'
-      }
+    stage('Build') {
       steps {
-        sh 'ant -f test.xml -v'
-        junit 'reports/result.xml'
+         sh 'ant -f test.xml -v'
       }
-    }
-    stage('build') {
-      agent {
-        label 'master'
-      }
-      steps {
-        sh 'ant -f build.xml -v'
-      }
-      
-    
     }
   }
 }
+     
